@@ -10,12 +10,13 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import List from "@material-ui/core/List";
 import MySnackbarContent from "./MySnackbarContent";
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from "@material-ui/core/Snackbar";
 import SearchResultItem from "./SearchResultItem";
 
 import Typography from "@material-ui/core/Typography";
 
 import { searchForIMDBTitle } from "./imdb.js";
+import { throws } from "assert";
 
 const styles = theme => ({
   main: {
@@ -27,8 +28,8 @@ const styles = theme => ({
       width: "100%",
       maxWidth: 360,
       marginLeft: "auto",
-      marginRight: "auto",
-    },
+      marginRight: "auto"
+    }
   },
   listMain: {
     width: "auto",
@@ -38,18 +39,19 @@ const styles = theme => ({
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 600,
       marginLeft: "auto",
-      marginRight: "auto",
-    },
+      marginRight: "auto"
+    }
   },
   title: {
-    textAlign: "center",
+    textAlign: "center"
   },
   block: {
     marginTop: theme.spacing.unit * 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`
   },
 
   list: {
@@ -57,35 +59,36 @@ const styles = theme => ({
     flexDirection: "column",
     width: "100%",
     alignItems: "left",
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`
   },
 
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit
   },
   submit: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 3
   },
   input: {
     marginLeft: 8,
-    flex: 1,
+    flex: 1
   },
   iconButton: {
-    padding: 10,
+    padding: 10
   },
   divider: {
     width: 1,
     height: 28,
-    margin: 4,
+    margin: 4
   },
   fab: {
-    margin: theme.spacing.unit,
-  },
+    margin: theme.spacing.unit
+  }
 });
 
 class App extends Component {
@@ -95,10 +98,10 @@ class App extends Component {
       searchQuery: "",
       results: [],
       successOpen: false,
-      failedOpen: false,
-    }
+      failedOpen: false
+    };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   render() {
@@ -106,9 +109,14 @@ class App extends Component {
     return (
       <div>
         <AppBar position="static">
-            <Typography className={classes.title} variant="h5" color="inherit" noWrap>
-              Movies Search
-            </Typography>
+          <Typography
+            className={classes.title}
+            variant="h5"
+            color="inherit"
+            noWrap
+          >
+            Movies Search
+          </Typography>
         </AppBar>
         <main className={classes.main}>
           <CssBaseline />
@@ -116,15 +124,23 @@ class App extends Component {
             <form className={classes.form} onSubmit={this.handleSubmit}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="searchQuery">Search Movies</InputLabel>
-                <Input id="searchQuery" name="searchQuery" autoComplete="searchQuery" onChange={this.handleChange} value={this.state.searchQuery} autoFocus />
+                <Input
+                  id="searchQuery"
+                  name="searchQuery"
+                  autoComplete="searchQuery"
+                  onChange={this.handleChange}
+                  value={this.state.searchQuery}
+                  autoFocus
+                />
               </FormControl>
-              <Button type="submit"
+              <Button
+                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
               >
-              Submit
+                Submit
               </Button>
             </form>
           </Paper>
@@ -133,28 +149,29 @@ class App extends Component {
           <CssBaseline />
           <Paper className={classes.paper}>
             <List className={classes.list}>
-              {this.state.results.map((searchItem) => {
+              {this.state.results.map(searchItem => {
                 return (
-                  <SearchResultItem key={searchItem.id} 
-                  id={searchItem.id} 
-                  primaryTitle={searchItem.primaryTitle} 
-                  originalTitle={searchItem.originalTitle} 
-                  runtimeMinutes={searchItem.runtimeMinutes} 
-                  tconst={searchItem.tconst}
-                  genres={searchItem.genres} 
-                  titleType={searchItem.titleType}
-                  endYear={searchItem.endYear}
-                  startYear={searchItem.startYear}
+                  <SearchResultItem
+                    key={searchItem.id}
+                    id={searchItem.id}
+                    primaryTitle={searchItem.primaryTitle}
+                    originalTitle={searchItem.originalTitle}
+                    runtimeMinutes={searchItem.runtimeMinutes}
+                    tconst={searchItem.tconst}
+                    genres={searchItem.genres}
+                    titleType={searchItem.titleType}
+                    endYear={searchItem.endYear}
+                    startYear={searchItem.startYear}
                   />
-                )
+                );
               })}
             </List>
           </Paper>
         </main>
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left"
           }}
           open={this.state.successOpen}
           autoHideDuration={6000}
@@ -163,67 +180,63 @@ class App extends Component {
           <MySnackbarContent
             onClose={this.handleSuccessClose}
             variant="success"
-            message={this.state.results.length+" Search Result(s) found successfully!"}
+            message={
+              this.state.results.length +
+              " Search Result(s) found successfully!"
+            }
           />
         </Snackbar>
-        {/* Todo: 
-        Create a Snackbar UI component with an error message,
-        for when the user searches and there is no result Firebase or due to some other error.
-
-        This should look very similar to the Snackbar above, but using the this.state.failedOpen
-        state variable and the this.handleFailedClose callback.
-        
-        When uncommenting, be sure to remove the '{' and '}' before and after the comment
 
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left"
           }}
-          open=// Assign variable that will control the open (displayed) state of failure Snackbar
+          open={this.state.failedOpen} // Assign variable that will control the open (displayed) state of failure Snackbar
           autoHideDuration={6000}
-          onClose=// Assign callback to be called when the Snackbar is closed
+          onClose={this.handleFailedClose} // Assign callback to be called when the Snackbar is closed
         >
           <MySnackbarContent
-            onClose=// Assign callback to be called when the Snackbar is closed
+            onClose={throws.handleFailedClose} // Assign callback to be called when the Snackbar is closed
             variant="error"
             message="No Results found, try another movie!"
           />
         </Snackbar>
-        */}
       </div>
     );
   }
   handleSuccessClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     this.setState({ successOpen: false });
   };
-  /* Todo: 
+  /*Todo:*/
+
   handleFailedClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
     // Add a this.setState call here to update the state variable for the opened
     // state of the failure Snackbar
+    this.setState({ failedOpen: false });
   };
-  */
+
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     this.setState({
       results: []
     });
 
-    searchForIMDBTitle(this.state.searchQuery, (searches) => {
+    searchForIMDBTitle(this.state.searchQuery, searches => {
       let newState = [];
       for (let searchItem in searches) {
         newState.push({
@@ -241,27 +254,28 @@ class App extends Component {
       }
       this.setState({
         results: newState,
-        searchQuery : '',
+        searchQuery: ""
       });
-      if(this.state.results && this.state.results.length > 0){
+      if (this.state.results && this.state.results.length > 0) {
         this.setState({
           successOpen: true,
-          failedOpen: false,
+          failedOpen: false
         });
-      }else{
+      } else {
         /* Todo: 
         No Results found.  As above, add a this.setState call
         to change the variable states to display the failure Snackbar
-        
         */
+        this.setState({
+          successOpen: false,
+          failedOpen: true
+        });
       }
     });
   }
-
- 
 }
 App.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(App);

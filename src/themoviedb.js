@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const artWorkBaseURL_200 = "https://image.tmdb.org/t/p/w200";
 
@@ -10,7 +10,7 @@ const themoviedbAPIKey = "c4e27b600e2ffcc7c073529938d9f79f";
  * @return the full URL as a String
  */
 export function getTheMovieDBImageURL(path) {
-  return artWorkBaseURL_200+path;
+  return artWorkBaseURL_200 + path;
 }
 
 /**
@@ -21,10 +21,10 @@ export function getTheMovieDBImageURL(path) {
  */
 export function getArtworkFromTheMovieDB(tconst) {
   return axios.get(`https://api.themoviedb.org/3/find/${tconst}`, {
-     params: {
-       api_key: themoviedbAPIKey,
-       language: 'en-US',
-       external_source:'imdb_id'
+    params: {
+      api_key: themoviedbAPIKey,
+      language: "en-US",
+      external_source: "imdb_id"
     }
   });
 }
@@ -41,6 +41,7 @@ export function getCreditsFromTheMovieDB(movieDBId) {
       /* Todo3: pass the TheMovieDB API key you stored in themoviedbAPIKey as the
          api_key parameter
       */
+      api_key: themoviedbAPIKey
     }
   });
 }
